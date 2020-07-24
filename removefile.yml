@@ -1,0 +1,10 @@
+---
+- name: Removendo Arquivo TXT dos servidores BPM
+  hosts: GOOGLE
+  gather_facts: no
+  tasks: 
+
+  - name: Remove file (delete file)
+    file:
+      path: /tmp/teste.txt
+      state: absent
