@@ -1,12 +1,29 @@
 ---
 - name: Copy from localhost to Google Cloud
-  hosts: GOOGLE
-  gather_facts: no
+  hosts: BPM
+#  gather_facts: no
   tasks:
-  - name: Copy file with owner and permissions
-    copy:
-      src: /mnt/c/Users/celima/Downloads/Openshift_pipeline_v2.pptx
-      dest: /tmp/
-      owner: root
-      group: root
-      mode: '0644'
+  
+  - name: Criando diretório caso ainda não exista
+    file:
+      path: /tmp/site
+      state: directory
+
+  - name: Realizando Backup do diretório 
+    archive:
+      path:
+      - /tmp/site/
+      dest: /tmp/bkp_{{ansible_date_time.iso8601_basic_short}}.zip
+#      dest: /tmp/bkp_{{ansible_date_time.date}}.zip
+
+  - name: Extraindo arquivo zip no destino
+    unarchive:
+      src: /mnt/d/templated-wirework.zip
+      dest: /tmp/site
+
+
+#  - name: Transferindo arquivos do file from ServerA to BPM Group
+#    synchronize:
+#      src: /tmp/teste/ansibleWindows/
+#      dest: /tmp/teste/teste2
+#    delegate_to: "{{ SRC_FILE }}"         

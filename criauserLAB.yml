@@ -1,0 +1,10 @@
+---
+- name: Criando usuário Ansible
+  hosts: lablinux
+  gather_facts: no
+  tasks:
+  - name: Adicionando o usuário Ansible
+    user:
+      name: ansible
+      shell: /bin/bash
+      home: /home/ansible
